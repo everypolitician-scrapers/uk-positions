@@ -8,6 +8,7 @@ require 'scraperwiki'
 
 require_relative 'lib/politician'
 
+ScraperWiki.sqliteexecute('DELETE FROM data') rescue nil
 house = EveryPolitician::Index.new.country('UK').lower_house
 house.popolo.persons.map(&:wikidata).compact.each_slice(100) do |wanted|
   data = Wikisnakker::Politician.find(wanted).flat_map(&:positions).compact
